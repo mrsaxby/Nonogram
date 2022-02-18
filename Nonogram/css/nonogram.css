@@ -1,0 +1,33 @@
+
+/********GLOBAL***********/
+.row {
+    margin-top: 1em;
+}
+
+
+#tile-grid {
+    line-height: 0;
+}
+
+#row-hints {
+    float: left;
+    margin-bottom: 5em;
+}
+
+.hints-col {
+    text-align: center;
+    font-size: 12px;
+    word-wrap: break-word;
+    border: 1px solid blue;
+    display: inline-block;
+}
+.hints-row {
+    text-align: center;
+    font-size: 12px;
+    word-wrap: break-word;
+    border: 1px solid red;
+
+}
+#row-hints .hints-row  div {
+    display: inline-block;
+}
