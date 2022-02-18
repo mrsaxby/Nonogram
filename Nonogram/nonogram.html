@@ -3,9 +3,8 @@
 <head>
     <title>Nonogram</title>
     <meta name="description" content="Nonogram">
-    <meta name="keywords" content="html tutorial template">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/nonogram.css?time=<?=time();?>">
+    <link rel="stylesheet" type="text/css" href="css/nonogram.css">
 </head>
 <body>
     <div class="container">
@@ -16,10 +15,15 @@
                     <input type="number" id="nonogram-size" max="45" min="2">
                     Mystery Game:
                     <input type="checkbox" id="nonogram-checkbox">
+
+
+                    <div id="selected-on">
+                    </div>
+                    <div id="selected-off">
+                    </div>
                 </div>
             </div>
             <div class="col-md-11">
-
                 <div id="tile-grid-container">
                     <div id="col-hints"></div>
                     <div id="row-hints"></div>

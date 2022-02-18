@@ -1350,6 +1350,9 @@ const love = [
         "answer": "0"
     }
 ];
+
+let selectedColour = "black";
+
 let size = 15;
 let tileSize = 20;
 let tilesAnswer = [];
@@ -1423,20 +1426,77 @@ function generateGameTiles(element) {
 
 
     document.querySelectorAll('.square').forEach(item => {
-
         item.addEventListener('click', event => {
+
+          console.log(item.dataset.row);
+
+
 
             if (item.dataset.toggled == 0) {
                 item.dataset.toggled = "1";
-                item.style.backgroundColor = "black";
+                if(selectedColour == "black") {
+                  item.style.backgroundColor = "black";
+                }
+                if(selectedColour == "grey") {
+                  item.style.backgroundColor = "grey";
+                }
             } else {
                 item.dataset.toggled = "0";
                 item.style.backgroundColor = "white";
             }
             updateGuess();
+
+
+
+        testCompletedCross(item);
+
+
         })
     });
 }
+
+
+function testCompletedCross(item) {
+
+  let itemRow = item.dataset.row;
+  let itemCol = item.dataset.column;
+
+  let rowItems = [...document.querySelectorAll('#tile-grid > div[data-row="' + itemRow + '"]')];
+  let rowAnswer1  = [...document.querySelectorAll('#tile-grid > div[data-row="' + itemRow + '"][data-answer="1"]')];
+  let rowToggled  = [...document.querySelectorAll('#tile-grid > div[data-row="' + itemRow + '"][data-toggled="1"]')];
+  let rowCorrect  = [...document.querySelectorAll('#tile-grid > div[data-row="' + itemRow + '"][data-answer="1"][data-toggled="1"]')];
+
+  let colItems = [...document.querySelectorAll('#tile-grid > div[data-column="' + itemCol + '"]')];
+  let colAnswer1  = [...document.querySelectorAll('#tile-grid > div[data-column="' + itemCol + '"][data-answer="1"]')];
+  let colToggled  = [...document.querySelectorAll('#tile-grid > div[data-column="' + itemCol + '"][data-toggled="1"]')];
+  let colCorrect  = [...document.querySelectorAll('#tile-grid > div[data-column="' + itemCol + '"][data-answer="1"][data-toggled="1"]')];
+
+  if(rowAnswer1.length == rowCorrect.length && rowToggled.length == rowAnswer1.length) {
+    for (let i = 0; i < rowItems.length; i++) {
+      if(rowItems[i].dataset.toggled == "1" && rowItems[i].dataset.answer == "1") {
+
+      }
+      else {
+        rowItems[i].style.backgroundColor = "grey";
+      }
+    }
+  }
+
+  if(colAnswer1.length == colCorrect.length && colToggled.length == colAnswer1.length) {
+    for (let i = 0; i < colItems.length; i++) {
+      if(colItems[i].dataset.toggled == "1" && colItems[i].dataset.answer == "1") {
+
+      }
+      else {
+        colItems[i].style.backgroundColor = "grey";
+      }
+    }
+  }
+
+}
+
+
+
 
 // in need row / column
 function hints(hintToGet) {
@@ -1523,3 +1583,15 @@ function checkWin() {
         alert("Completed");
     }
 }
+
+
+
+
+document.querySelector("#selected-on").addEventListener('click', e => {
+  selectedColour = "black";
+});
+
+
+document.querySelector("#selected-off").addEventListener('click', e => {
+  selectedColour = "grey";
+});
