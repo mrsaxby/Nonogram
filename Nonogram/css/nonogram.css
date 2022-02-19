@@ -38,13 +38,20 @@
 
 
 #selected-on {
-  height: 16px;
-  width: 16px;
-  background-color: black;
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    background-color: black;
+
 }
 
 #selected-off {
-  height: 16px;
-  width: 16px;
-  background-color: grey;
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    background-color: grey;
+}
+
+.disable-dbl-tap-zoom {
+    touch-action: manipulation;
 }

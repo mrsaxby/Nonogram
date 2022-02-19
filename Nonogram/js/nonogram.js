@@ -1354,17 +1354,15 @@ const love = [
 let selectedColour = "black";
 
 let size = 15;
-let tileSize = 20;
+let tileSize = 25;
 let tilesAnswer = [];
 let tilesGuess = [];
-
 
 document.querySelector("#nonogram-size").addEventListener('change', evt => {
     size = document.querySelector("#nonogram-size").value;
     clearGame();
     generateGameTiles(document.querySelector("#tile-grid"));
     document.querySelector("#col-hints").style.marginLeft = Math.round(document.querySelector("#row-hints").getBoundingClientRect().width) + "px";
-
 });
 
 function clearGame(elementChildren) {
@@ -1372,7 +1370,6 @@ function clearGame(elementChildren) {
     document.querySelector('#row-hints').innerHTML = "";
     document.querySelector('#tile-grid').innerHTML = "";
 }
-
 
 generateGameTiles(document.querySelector("#tile-grid"));
 document.querySelector("#col-hints").style.marginLeft = Math.round(document.querySelector("#row-hints").getBoundingClientRect().width) + "px";
@@ -1413,32 +1410,28 @@ function generateGameTiles(element) {
             if (love[index]["column"] == div.dataset["column"] && love[index]["row"] == div.dataset["row"] && love[index]["toggled"] == 1) {
                 div.dataset["answer"] = 1;
             }
-
-
         });
-
     }
-
-    // document.querySelectorAll('[data-answer="1"]').forEach(e => e.style.backgroundColor = "red");
 
     hints("columns");
     hints("rows");
 
-
     document.querySelectorAll('.square').forEach(item => {
         item.addEventListener('click', event => {
 
-          console.log(item.dataset.row);
-
-
-
             if (item.dataset.toggled == 0) {
-                item.dataset.toggled = "1";
                 if(selectedColour == "black") {
-                  item.style.backgroundColor = "black";
+                    item.dataset.toggled = "1";
+                    item.style.backgroundColor = "black";
                 }
                 if(selectedColour == "grey") {
-                  item.style.backgroundColor = "grey";
+                    if(item.style.backgroundColor == "") {
+                        item.style.backgroundColor = "grey";
+                    }
+                    else {
+                        item.style.backgroundColor = "white";
+                    }
+
                 }
             } else {
                 item.dataset.toggled = "0";
@@ -1446,11 +1439,7 @@ function generateGameTiles(element) {
             }
             updateGuess();
 
-
-
-        testCompletedCross(item);
-
-
+            testCompletedCross(item);
         })
     });
 }
@@ -1458,40 +1447,40 @@ function generateGameTiles(element) {
 
 function testCompletedCross(item) {
 
-  let itemRow = item.dataset.row;
-  let itemCol = item.dataset.column;
+    let itemRow = item.dataset.row;
+    let itemCol = item.dataset.column;
 
-  let rowItems = [...document.querySelectorAll('#tile-grid > div[data-row="' + itemRow + '"]')];
-  let rowAnswer1  = [...document.querySelectorAll('#tile-grid > div[data-row="' + itemRow + '"][data-answer="1"]')];
-  let rowToggled  = [...document.querySelectorAll('#tile-grid > div[data-row="' + itemRow + '"][data-toggled="1"]')];
-  let rowCorrect  = [...document.querySelectorAll('#tile-grid > div[data-row="' + itemRow + '"][data-answer="1"][data-toggled="1"]')];
+    let rowItems = [...document.querySelectorAll('#tile-grid > div[data-row="' + itemRow + '"]')];
+    let rowAnswer1  = [...document.querySelectorAll('#tile-grid > div[data-row="' + itemRow + '"][data-answer="1"]')];
+    let rowToggled  = [...document.querySelectorAll('#tile-grid > div[data-row="' + itemRow + '"][data-toggled="1"]')];
+    let rowCorrect  = [...document.querySelectorAll('#tile-grid > div[data-row="' + itemRow + '"][data-answer="1"][data-toggled="1"]')];
 
-  let colItems = [...document.querySelectorAll('#tile-grid > div[data-column="' + itemCol + '"]')];
-  let colAnswer1  = [...document.querySelectorAll('#tile-grid > div[data-column="' + itemCol + '"][data-answer="1"]')];
-  let colToggled  = [...document.querySelectorAll('#tile-grid > div[data-column="' + itemCol + '"][data-toggled="1"]')];
-  let colCorrect  = [...document.querySelectorAll('#tile-grid > div[data-column="' + itemCol + '"][data-answer="1"][data-toggled="1"]')];
+    let colItems = [...document.querySelectorAll('#tile-grid > div[data-column="' + itemCol + '"]')];
+    let colAnswer1  = [...document.querySelectorAll('#tile-grid > div[data-column="' + itemCol + '"][data-answer="1"]')];
+    let colToggled  = [...document.querySelectorAll('#tile-grid > div[data-column="' + itemCol + '"][data-toggled="1"]')];
+    let colCorrect  = [...document.querySelectorAll('#tile-grid > div[data-column="' + itemCol + '"][data-answer="1"][data-toggled="1"]')];
 
-  if(rowAnswer1.length == rowCorrect.length && rowToggled.length == rowAnswer1.length) {
-    for (let i = 0; i < rowItems.length; i++) {
-      if(rowItems[i].dataset.toggled == "1" && rowItems[i].dataset.answer == "1") {
+    if(rowAnswer1.length == rowCorrect.length && rowToggled.length == rowAnswer1.length) {
+        for (let i = 0; i < rowItems.length; i++) {
+            if(rowItems[i].dataset.toggled == "1" && rowItems[i].dataset.answer == "1") {
 
-      }
-      else {
-        rowItems[i].style.backgroundColor = "grey";
-      }
+            }
+            else {
+                rowItems[i].style.backgroundColor = "grey";
+            }
+        }
     }
-  }
 
-  if(colAnswer1.length == colCorrect.length && colToggled.length == colAnswer1.length) {
-    for (let i = 0; i < colItems.length; i++) {
-      if(colItems[i].dataset.toggled == "1" && colItems[i].dataset.answer == "1") {
+    if(colAnswer1.length == colCorrect.length && colToggled.length == colAnswer1.length) {
+        for (let i = 0; i < colItems.length; i++) {
+            if(colItems[i].dataset.toggled == "1" && colItems[i].dataset.answer == "1") {
 
-      }
-      else {
-        colItems[i].style.backgroundColor = "grey";
-      }
+            }
+            else {
+                colItems[i].style.backgroundColor = "grey";
+            }
+        }
     }
-  }
 
 }
 
@@ -1586,12 +1575,15 @@ function checkWin() {
 
 
 
-
 document.querySelector("#selected-on").addEventListener('click', e => {
-  selectedColour = "black";
+    document.querySelector("#selected-off").style.border = "none";
+    document.querySelector("#selected-on").style.border = "1px solid red";
+    selectedColour = "black";
 });
 
 
 document.querySelector("#selected-off").addEventListener('click', e => {
-  selectedColour = "grey";
+    document.querySelector("#selected-on").style.border = "none";
+    document.querySelector("#selected-off").style.border = "1px solid red";
+    selectedColour = "grey";
 });
